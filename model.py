@@ -77,7 +77,9 @@ class Company_R(db.Model):
 
     company = db.relationship("Company_N", backref=db.backref("company_reviews", order_by=id))
 
-    # backref is a simple way to also declare a new property on the Event class. You can then also use my_event.person (my_event is a pre-created query) to get to the person at that event.
+    # backref is a simple way to also declare a new property on the Company_R class. 
+    # You can then also use a_review.user.first_name (a_review is a pre-created
+    # query) to get the person who made the review.
 
     def __repr__(self):
         """Provide helpful representation when printed."""
