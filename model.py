@@ -21,29 +21,33 @@ class User(db.Model):
     password = db.Column(db.String(64), nullable=False)
     gender = db.Column(db.String(1000), nullable=False)
     past_jobs = db.Column(db.String(2000), nullable=True)
+    phone = db.Column(db.String(10), nullable=True, unique=True)
     introduction = db.Column(db.String(2000), nullable=True)
     company_name = db.Column(db.String(50), nullable=True)
     category = db.Column(db.String(500), db.ForeignKey("categories.name"))
     city = db.Column(db.String(20), db.ForeignKey("cities.name"))
     is_matched = db.Column(db.Boolean, default=False)
+    url = db.Column(db.String(1000), nullable=True)
 
     def __repr__(self):
         """Provides helpful representation when printed."""
 
         return "<User id=%s first_name=%s last_name=%s email=%s password=%s gender=%s \
-                past_jobs=%s introduction=%s company_name=%s category=%s city=%s \
-                is_matched=%s> " % (self.id,
-                                    self.first_name,
-                                    self.last_name,
-                                    self.email,
-                                    self.password,
-                                    self.gender,
-                                    self.past_jobs,
-                                    self.introduction,
-                                    self.company_name,
-                                    self.category,
-                                    self.city,
-                                    self.is_matched)
+                past_jobs=%s phone=%s introduction=%s company_name=%s category=%s city=%s \
+                is_matched=%s url=%s> " % (self.id,
+                                           self.first_name,
+                                           self.last_name,
+                                           self.email,
+                                           self.password,
+                                           self.gender,
+                                           self.past_jobs,
+                                           self.phone,
+                                           self.introduction,
+                                           self.company_name,
+                                           self.category,
+                                           self.city,
+                                           self.is_matched,
+                                           self.url)
 
 
 class Mentee(db.Model):
