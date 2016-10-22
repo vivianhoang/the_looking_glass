@@ -1,6 +1,7 @@
 """Models and database functions for The Looking Glass."""
 
 from flask_sqlalchemy import SQLAlchemy
+import dictalchemy
 
 # Connecting to the PostgreSQL database through the FLASK-SQLAlchemy helper library
 
@@ -135,8 +136,17 @@ class City(db.Model):
         return "<City id=%s name=%s>" % (self.id,
                                          self.name)
 
-################################################################################
 
+dictalchemy.utils.make_class_dictable(User)
+dictalchemy.utils.make_class_dictable(Salary_R)
+dictalchemy.utils.make_class_dictable(Company_R)
+dictalchemy.utils.make_class_dictable(Company_N)
+dictalchemy.utils.make_class_dictable(Mentee)
+dictalchemy.utils.make_class_dictable(Topic)
+dictalchemy.utils.make_class_dictable(Match)
+
+################################################################################
+# This is a test comment
 # Currently have the psql database as 'tlg'. Can change later.
 
 
