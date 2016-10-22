@@ -1,6 +1,7 @@
 """Models and database functions for The Looking Glass."""
 
 from flask_sqlalchemy import SQLAlchemy
+import dictalchemy
 
 # Connecting to the PostgreSQL database through the FLASK-SQLAlchemy helper library
 
@@ -77,7 +78,7 @@ class Company_R(db.Model):
 
     company = db.relationship("Company_N", backref=db.backref("company_reviews", order_by=id))
 
-    # backref is a simple way to also declare a new property on the Company_R class. 
+    # backref is a simple way to also declare a new property on the Company_R class.
     # You can then also use a_review.user.first_name (a_review is a pre-created
     # query) to get the person who made the review.
 
@@ -169,6 +170,15 @@ class Match(db.Model):
         return "<Match id=%s mentee_id=%s mentor_id=%s>" % (self.id,
                                                             self.mentee_id,
                                                             self.mentor_id)
+
+
+dictalchemy.utils.make_class_dictable(User)
+dictalchemy.utils.make_class_dictable(Salary_R)
+dictalchemy.utils.make_class_dictable(Company_R)
+dictalchemy.utils.make_class_dictable(Company_N)
+dictalchemy.utils.make_class_dictable(Mentee)
+dictalchemy.utils.make_class_dictable(Topic)
+dictalchemy.utils.make_class_dictable(Match)
 
 ################################################################################
 # This is a test comment
