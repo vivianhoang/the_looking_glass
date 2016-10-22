@@ -1,0 +1,20 @@
+New York
+Los Angeles
+Chicago
+Houston
+Philadelphia
+Phoenix
+San Antonio
+San Diego
+Dallas
+San Jose
+San Francisco
+Austin
+Detroit
+Baltimore
+Boston
+Seattle
+Washington  DC
+Denver
+Portland
+Las Vegas
