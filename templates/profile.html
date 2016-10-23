@@ -57,10 +57,10 @@
         <div>    
             <label>City:
                 <select name="city">
-                {% if user.city_name %}
-                    <option value={{"user.city_name"}}>{{user.city_name}}</option>
+                {% if user.city_id %}
+                    <option value={{"user.city.name"}}>{{user.city_name}}</option>
                 {% for city in cities %}
-                    <option value="{{city.city_name}}">{{ city.city_name }}</option>
+                    <option value="{{city.city_name}}">{{city.city_name}}</option>
                 {% endfor %}
                 </select>
             </label>

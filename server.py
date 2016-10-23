@@ -67,7 +67,7 @@ def register():
 
         # Check to see if user is a mentee or mentor
         # have to put the user into right database
-        if role == "Mentor":
+        if role == "mentor":
             mentor = Mentor(user_id=session['id'],
                 )
             db.session.add(mentor)
