@@ -86,7 +86,7 @@ def login():
     """Login page for existing user."""
 
     email = request.form.get('email')
-    password =request.form.get('password')
+    password = request.form.get('password')
     user = User.query.filter_by(email=email).first()
 
     if not user:
@@ -191,7 +191,7 @@ def update_profile():
 
 
 @app.route('/find-mentors')
-def available_mentors:
+def available_mentors():
     """Display all available mentors."""
 
     mentors = Mentor.query.filter(Mentor.user.company_name != "--").all()
@@ -201,32 +201,36 @@ def available_mentors:
 # if user is a mentor AND they have chosen a category they want to mentor in,
 # render template and display all the mentors
 
+
 @app.route('/match-pending', methods=["POST"])
-def match_pending:
+def match_pending():
     """Mentee selects interest in a mentor."""
 
     mentor_id = request.form.get("mentor_id")
     # not sure if querying for mentee id is correct
-    mentee_id = Mentee.query.filter_by(Mentee.user.user_id == session[id]).one()
-    user = User.query.filter_by(user_id=session['id']).first()
+    mentee_id = Mentee.query.filter_by(Mentee.user.user_id == session['id']).one()
+    # user = User.query.filter_by(user_id=session['id']).first()
 
-    new_pending = MatchR(mentee_id=user, mentor_id=mentor_id)
+    new_pending = MatchR(mentee_id=mentee_id, mentor_id=mentor_id)
 
     db.session.add(new_pending)
     db.session.commit()
 
+    return render_template("/SOME CONFIRMATION PAGE")
+
 
 @app.route('/match', methods=["POST"])
-def match:
+def match():
     """Mentor accepts a mentee's request for mentorship."""
 
     # need to find out how to find mentee id and mentor id
 
-    MatchR.query.filter(mentee_id=mentee_id, mentor_id=mentor_id).update({"status": "Matched"})
+    # MatchR.query.filter(mentee_id=mentee_id, mentor_id=mentor_id).update({"status": "Matched"})
 
-    db.session.commit()
+    # db.session.commit()
 
     return redirect('/SOMEWHERE-LOL. Probably to a chatting page.')
+
 
 @app.route('/logout')
 def logout():
@@ -240,7 +244,7 @@ def logout():
 if __name__ == '__main__':
     app.debug = True
     # app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
-    connect_to_db(app) 
+    connect_to_db(app)
     DebugToolbarExtension(app)
     app.run(host="0.0.0.0", port=5000)
 
