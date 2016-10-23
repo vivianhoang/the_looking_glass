@@ -22,34 +22,34 @@
         <div class="label">Current Company:</div>
         {% if user.company_name %}
             <div>
-                <textarea class="company-name" name="company-name" rows="10" cols="5">{{user.company_name}}</textarea>
+                <input type="text" id="company_name" class="form-group" name="form-group" rows="10" cols="5" placeholder="{{user.company_name}}">
             </div>
 
         {% else %}
             <div>
-                <textarea class="company-name" name="company-name" rows="10" cols="5" placeholder="Enter your profile here..."></textarea>
+                <input type="text" id="company_name" class="form-group" name="form-group" rows="10" cols="5" placeholder="Enter your profile here...">
             </div>
 
         <div class="label">About Me:</div><span class="chars"></span>
         {% if user.introduction %}
             <div>
-                <textarea class="profile-bio" name="profile-bio" rows="10" cols="25">{{user.introduction}}</textarea>
+                <textarea id="profile-bio" class="form-control" name="form-control" rows="10" cols="25">{{user.introduction}}</textarea>
             </div>
 
         {% else %}
             <div>
-                <textarea class="profile-bio" name="profile-bio" rows="18" cols="45" placeholder="Enter your profile here..."></textarea>
+                <textarea id="profile-bio" class="form-control" name="form-control" rows="18" cols="45" placeholder="Enter your profile here..."></textarea>
             </div>
 
         <div class="label">Previous Experience:</div><span class="chars"></span>
         {% if user.past_job %}
             <div>
-                <textarea class="past-job" name="past-job" rows="15" cols="25">{{user.past_job}}</textarea>
+                <textarea id="past-job"class="form-control" name="form-control" rows="15" cols="25">{{user.past_job}}</textarea>
             </div>
 
         {% else %}
             <div>
-                <textarea class="past-job" name="past-job" rows="15" cols="25" placeholder="Enter previous experience..."></textarea>
+                <textarea id="past-job"class="form-control" name="form-control"  rows="15" cols="25" placeholder="Enter previous experience..."></textarea>
             </div>
 
         {% endif %}
@@ -69,12 +69,12 @@
         <div class="label">LinkedIn URL:</div>
         {% if user.url %}
             <div>
-                <textarea class="url" name="url" rows="10" cols="25">{{user.url}}</textarea>
+                <input type="text" id="url" class="form-group" name="form-group" rows="10" cols="5" placeholder="{{user.url}}">
             </div>
 
         {% else %}
             <div>
-                <textarea class="url" name="url" rows="10" cols="15" placeholder="Enter your url..."></textarea>
+                <input type="text" id="url" class="form-group" name="form-group" rows="10" cols="5" placeholder="Enter your link here...">
             </div>
 
         <div>
