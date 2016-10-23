@@ -16,8 +16,8 @@ def load_cities():
     ordered_cities = sorted(cities)
 
     for city in ordered_cities:
-        city = City.query.filter_by(name=city).first()
-        if not city:
+        find_city = City.query.filter_by(name=city).first()
+        if not find_city:
             city = City(name=city)
             db.session.add(city)
 
@@ -37,8 +37,8 @@ def load_job_categories():
     sorted_jobs = sorted(jobs)
 
     for job in sorted_jobs:
-        job = Category.query.filter_by(name=job).first()
-        if not job:
+        find_job = Category.query.filter_by(name=job).first()
+        if not find_job:
             job = Category(name=job)
             db.session.add(job)
 
