@@ -180,10 +180,10 @@ def update_profile():
             "company_name": company,
             "introduction": description,
             "past_jobs": past_jobs,
-            "city_name": city,
+            "city_id": city,
             "url": url}
 
-    User.query.filter_by(user_id=session['id']).update(data)
+    User.query.filter_by(id=session['id']).update(data)
 
     db.session.commit()
 

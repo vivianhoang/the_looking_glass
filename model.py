@@ -25,7 +25,7 @@ class User(db.Model):
     introduction = db.Column(db.String(1000), nullable=True)
     company_name = db.Column(db.String(50), nullable=True)
     category_id = db.Column(db.Integer, db.ForeignKey("categories.id"))
-    city_id = db.Column(db.String(20), db.ForeignKey("cities.id"))
+    city_id = db.Column(db.Integer, db.ForeignKey("cities.id"))
     is_matched = db.Column(db.Boolean, default=False)
     url = db.Column(db.String(1000), nullable=True)
 
