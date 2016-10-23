@@ -25,9 +25,11 @@ class User(db.Model):
     introduction = db.Column(db.String(1000), nullable=True)
     company_name = db.Column(db.String(50), nullable=True)
     category_id = db.Column(db.Integer, db.ForeignKey("categories.id"))
-    city_name = db.Column(db.String(20), db.ForeignKey("cities.name"))
+    city_id = db.Column(db.String(20), db.ForeignKey("cities.id"))
     is_matched = db.Column(db.Boolean, default=False)
     url = db.Column(db.String(1000), nullable=True)
+
+    city = db.relationship("City", backref=db.backref("User"), order_by=id)
 
     def __repr__(self):
         """Provides helpful representation when printed."""
@@ -45,7 +47,7 @@ class User(db.Model):
                                            self.introduction,
                                            self.company_name,
                                            self.category_id,
-                                           self.city_name,
+                                           self.city_id,
                                            self.is_matched,
                                            self.url)
 
