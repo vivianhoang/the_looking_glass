@@ -24,8 +24,8 @@ class User(db.Model):
     phone = db.Column(db.String(10), nullable=True, unique=True)
     introduction = db.Column(db.String(2000), nullable=True)
     company_name = db.Column(db.String(50), nullable=True)
-    category_id = db.Column(db.String(500), db.ForeignKey("categories.name"))
-    city_id = db.Column(db.String(20), db.ForeignKey("cities.name"))
+    category_id = db.Column(db.String(500), db.ForeignKey("categories.id"))
+    city_id = db.Column(db.String(20), db.ForeignKey("cities.id"))
     is_matched = db.Column(db.Boolean, default=False)
     url = db.Column(db.String(1000), nullable=True)
 
