@@ -6,4 +6,26 @@
 
 {% block content %}
     <h1>Search for mentors</h1>
+    <div>
+        <form action="/match-pending", method="POST">
+            {# Need to figure out how to include dropdown that sorts the display of mentors #}
+            <div>
+                <label>
+                    {% if mentors %}
+                        {% for mentor in mentors%}
+                            <input type="radio" name="mentor_id" value="{{mentor.id}}" required>{{mentor.user.first_name}} {{mentor.user.last_name}} | <a href='/other_user/mentor.user.id'>Profile</a><br>
+                        {% endfor %}
+                    {% endif %}
+                </label>
+            </div>
+            <div>
+                {% if mentors %}
+                <br></br>
+                    <input type="submit" value="I'm interested">
+                {% else %}
+                    <h3>Oops! There are currently no mentors available.</h3>
+                {% endif %}
+            </div>
+        </form>
+    </div>
 {% endblock %}
