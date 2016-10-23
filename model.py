@@ -58,7 +58,7 @@ class Mentee(db.Model):
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
-    user = db.realtionship("User", backref=db.backref("mentees"), order_by=id)
+    user = db.relationship("User", backref=db.backref("mentees"), order_by=id)
 
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -75,7 +75,7 @@ class Mentor(db.Model):
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
 
-    user = db.realtionship("User", backref=db.backref("mentors"), order_by=id)
+    user = db.relationship("User", backref=db.backref("mentors"), order_by=id)
 
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -96,7 +96,7 @@ class MatchR(db.Model):
 
     mentee = db.relationship("Mentee", backref=db.backref("match_requests", order_by=id))
 
-    mentor = db.realtionship("Mentor", backref=db.backref("match_requests", order_by=id))
+    mentor = db.relationship("Mentor", backref=db.backref("match_requests", order_by=id))
 
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -142,12 +142,11 @@ class City(db.Model):
 
 
 dictalchemy.utils.make_class_dictable(User)
-dictalchemy.utils.make_class_dictable(Salary_R)
-dictalchemy.utils.make_class_dictable(Company_R)
-dictalchemy.utils.make_class_dictable(Company_N)
 dictalchemy.utils.make_class_dictable(Mentee)
-dictalchemy.utils.make_class_dictable(Topic)
-dictalchemy.utils.make_class_dictable(Match)
+dictalchemy.utils.make_class_dictable(Mentor)
+dictalchemy.utils.make_class_dictable(MatchR)
+dictalchemy.utils.make_class_dictable(Category)
+dictalchemy.utils.make_class_dictable(City)
 
 ################################################################################
 # This is a test comment
