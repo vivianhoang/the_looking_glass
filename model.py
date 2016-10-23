@@ -20,12 +20,12 @@ class User(db.Model):
     email = db.Column(db.String(60), unique=True, nullable=False)
     password = db.Column(db.String(64), nullable=False)
     gender = db.Column(db.String(1000), nullable=False)
-    past_jobs = db.Column(db.String(2000), nullable=True)
+    past_jobs = db.Column(db.String(1000), nullable=True)
     phone = db.Column(db.String(10), nullable=True, unique=True)
-    introduction = db.Column(db.String(2000), nullable=True)
+    introduction = db.Column(db.String(1000), nullable=True)
     company_name = db.Column(db.String(50), nullable=True)
     category_id = db.Column(db.Integer, db.ForeignKey("categories.id"))
-    city_id = db.Column(db.Integer, db.ForeignKey("cities.id"))
+    city_name = db.Column(db.String(20), db.ForeignKey("cities.name"))
     is_matched = db.Column(db.Boolean, default=False)
     url = db.Column(db.String(1000), nullable=True)
 
@@ -45,7 +45,7 @@ class User(db.Model):
                                            self.introduction,
                                            self.company_name,
                                            self.category_id,
-                                           self.city_id,
+                                           self.city_name,
                                            self.is_matched,
                                            self.url)
 
