@@ -24,8 +24,8 @@ class User(db.Model):
     phone = db.Column(db.String(10), nullable=True, unique=True)
     introduction = db.Column(db.String(2000), nullable=True)
     company_name = db.Column(db.String(50), nullable=True)
-    category = db.Column(db.String(500), db.ForeignKey("categories.name"))
-    city = db.Column(db.String(20), db.ForeignKey("cities.name"))
+    category_id = db.Column(db.String(500), db.ForeignKey("categories.name"))
+    city_id = db.Column(db.String(20), db.ForeignKey("cities.name"))
     is_matched = db.Column(db.Boolean, default=False)
     url = db.Column(db.String(1000), nullable=True)
 
@@ -44,8 +44,8 @@ class User(db.Model):
                                            self.phone,
                                            self.introduction,
                                            self.company_name,
-                                           self.category,
-                                           self.city,
+                                           self.category_id,
+                                           self.city_id,
                                            self.is_matched,
                                            self.url)
 
@@ -113,7 +113,7 @@ class Category(db.Model):
     __tablename__ = "categories"
 
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    name = db.Column(db.String(20), nullable=False, primary_key=True)
+    name = db.Column(db.String(20))
 
     def __repr__(self):
         """Provides helpful representation when printed."""
@@ -128,7 +128,7 @@ class City(db.Model):
     __tablename__ = "cities"
 
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    name = db.Column(db.String(20), primary_key=True)
+    name = db.Column(db.String(20))
 
     # backref is a simple way to also declare a new property on the Company_R class.
     # You can then also use a_review.user.first_name (a_review is a pre-created
