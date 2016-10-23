@@ -17,7 +17,7 @@
 
         <p>Four loko drinking vinegar chambray, occupy put a bird on it pickled poutine keytar tumeric listicle hexagon tilde.</p>
 
-        <form action="/register" class="form-horizontal">
+        <form action="/register" method="POST" class="form-horizontal">
             <div class="form-group">
                 <input type="text" name="firstname" placeholder="First Name" class="form-control">
             </div>
@@ -41,9 +41,11 @@
                 </label>
             </div>
 
-        </form>
 
-        <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+        <p>
+            <button type="submit" class="btn btn-lg btn-primary">Sign up today</button>
+        </p>
+        </form>
     </div>
 
 {% endblock %}
