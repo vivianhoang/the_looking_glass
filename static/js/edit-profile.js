@@ -21,11 +21,11 @@ function updateProfile(evt) {
 
     var formInputs = {
         "category-id": $(".category").val(),
-        "company": $(".company-name").val(),
-        "description": $(".profile-bio").val(),
-        "prev-experience": $(".past-job").val(),
+        "company": $("#company-name").val(),
+        "description": $("#profile-bio").val(),
+        "prev-experience": $("#past-job").val(),
         "city": $(".city").val(),
-        "url": $(".url").val()
+        "url": $("#url").val()
     };
 
     console.log(formInputs);
