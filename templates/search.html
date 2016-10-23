@@ -5,27 +5,41 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Search for mentors</h1>
-    <div>
-        <form action="/match-pending", method="POST">
-            {# Need to figure out how to include dropdown that sorts the display of mentors #}
-            <div>
-                <label>
-                    {% if mentors %}
-                        {% for mentor in mentors%}
-                            <input type="radio" name="mentor_id" value="{{mentor.id}}" required>{{mentor.user.first_name}} {{mentor.user.last_name}} | <a href='/other_user/mentor.user.id'>Profile</a><br>
-                        {% endfor %}
-                    {% endif %}
-                </label>
+    <div class="container">
+        <h1>Search for mentors</h1>
+        <form action="" method="POST" class="form-horizontal">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Job Category:</label>
+                <div class="col-sm-10">
+                    <select name="category" class="form-control">
+                    {% for category in categories %}
+                        <option value="{{category.id}}">{{ category.name }}</option>
+                    {% endfor %}
+                    </select>
+                </div>
             </div>
-            <div>
-                {% if mentors %}
-                <br></br>
-                    <input type="submit" value="I'm interested">
-                {% else %}
-                    <h3>Oops! There are currently no mentors available.</h3>
-                {% endif %}
+            <div class="form-group">
+                <label class="col-sm-2 control-label">City:</label>
+                <div class="col-sm-10">
+                    <select name="city" class="form-control">
+                    {% for city in cities %}
+                        <option value="{{city.name}}">{{city.name}}</option>
+                    {% endfor %}
+                    </select>
+                </div>
             </div>
-        </form>
+            <div class="form-group">
+                 <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default btn-primary">Search</button>
+                </div>
+            </div>
+         </form>
+         <h2>Search Results</h2>
+         <p>Oops! There are currently no mentors available.</p>
+         {% if mentors %}
+            {% for mentor in mentors%}
+                <input type="radio" name="mentor_id" value="{{mentor.id}}" required>{{mentor.user.first_name}} {{mentor.user.last_name}} | <a href='/profile/{{mentor.user.id}}'>Profile</a><br>
+            {% endfor %}
+        {% endif %}
     </div>
 {% endblock %}

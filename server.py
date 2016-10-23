@@ -7,6 +7,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 
 
 from model import connect_to_db, db, User, Mentee, Mentor, MatchR, Category, City
+import dictalchemy
 
 app = Flask(__name__)
 app.secret_key = "ABC"
@@ -39,7 +40,7 @@ def register():
     role = request.form.get("role")
 
     user = User.query.filter(User.email == email).first()
-    
+
     # Check to see if they are already registered user.
     # If in database, redirect them to index with flash message "You are already registered. Please log in"
     if email == user:
@@ -194,12 +195,35 @@ def update_profile():
 def available_mentors():
     """Display all available mentors."""
 
-    mentors = Mentor.query.filter(Mentor.user.company_name != "--").all()
+    #mentors = Mentor.query.filter(Mentor.user.company_name != "--").all()
+    mentors = Mentor.query.all()
+    categories = Category.query.all()
+    cities = City.query.all()
 
-    return render_template("search.html", mentors=mentors)
+    return render_template("search.html", categories=categories, cities=cities, mentors=mentors)
 # find available mentors
 # if user is a mentor AND they have chosen a category they want to mentor in,
 # render template and display all the mentors
+
+@app.route('/mentors.json')
+def get_mentors():
+    """Return list of mentors in json."""
+
+    search_results = Mentor.query.all()
+    mentors_dict = {}
+
+    for counter, result in enumerate(search_results, 1):
+        # print result.user.first_name, result.user.city_id
+
+        if result.user.city_id == 17:
+            mentor = dictalchemy.utils.asdict(result.user)
+            mentor['mentor_id'] = result.id
+            mentors_dict['mentor' + str(counter)] = mentor
+
+    # print mentors_dict
+
+    return jsonify(mentors_dict)
+
 
 
 @app.route('/match-pending', methods=["POST"])
