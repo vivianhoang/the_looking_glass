@@ -46,10 +46,10 @@ def register():
         flash("You are already a registered user. Please login.")
         return redirect('/')
     # Else if they a new user, Add to user table
-    else: 
-        user = User(first_name=firstname, 
+    else:
+        user = User(first_name=firstname,
                     last_name=lastname,
-                    email=email, 
+                    email=email,
                     password=password,
                     gender=gender,
                     # past_jobs=past_jobs,
@@ -59,15 +59,15 @@ def register():
                     # category_id=category_id,
                     # city_id=city_id,
                     # url=url,
-                    ) 
+                    )
         db.session.add(user)
         db.session.commit()
         flash("You have been added.")
         session['id'] = user.id
 
-        # Check to see if user is a mentee or mentor 
+        # Check to see if user is a mentee or mentor
         # have to put the user into right database
-        if role ==  "Mentor":
+        if role == "Mentor":
             mentor = Mentor(user_id=session['id'],
                 )
             db.session.add(mentor)
@@ -106,7 +106,7 @@ def login():
 def mentee():
     """Landing for existing mentee."""
 
-    # Page with Matches and pending matches. 
+    # Page with Matches and pending matches.
 
     return render_template("mentee.html")
 
@@ -115,7 +115,7 @@ def mentee():
 def mentor():
     """Landing page for mentor login."""
 
-    # Page with pending mentee matches 
+    # Page with pending mentee matches
 
     return render_template("mentor.html")
 
@@ -127,31 +127,106 @@ def display_profile(id):
     # Page with user profile including first name, last name, email, etc
 
     user = User.query.filter(User.id == id).one()
+    # mentee = Mentee.query.filter(Mentee.user_id == id).one()
+    mentor = Mentor.query.filter(Mentor.user_id == id).one()
+    categories = Category.query.all()
+    cities = City.query.all()
 
-    first_name = user.first_name
-    last_name = user.last_name
-    email = user.email
-    gender = user.gender
-    past_jobs = user.past_jobs
-    phone = user.phone
-    introduction = user.introduction
-    company_name = user.company_name
-    category_id = user.category_id
-    city_id = user.city_id
-    url = user.url
+    # if mentee:
+        # return render_template("profile.html", user=user, mentee=mentee)
 
-    return render_template("profile.html",
-                            first_name=first_name,
-                            last_name=last_name,
-                            email=email,
-                            gender=gender,
-                            past_jobs=past_jobs,
-                            phone=phone,
-                            introduction=introduction,
-                            company_name=company_name,
-                            category_id=category_id,
-                            city_id=city_id,
-                            url=url)
+    if mentor:
+        return render_template("profile.html", user=user, mentor=mentor, categories=categories, cities=cities)
+
+    return render_template("profile.html", user=user, cities=cities)
+    # first_name = user.first_name
+    # last_name = user.last_name
+    # email = user.email
+    # gender = user.gender
+    # past_jobs = user.past_jobs
+    # phone = user.phone
+    # introduction = user.introduction
+    # company_name = user.company_name
+    # category_id = user.category_id
+    # city_id = user.city_id
+    # url = user.url
+
+    # return render_template("profile.html", user=user)
+                            # first_name=first_name,
+                            # last_name=last_name,
+                            # email=email,
+                            # gender=gender,
+                            # past_jobs=past_jobs,
+                            # phone=phone,
+                            # introduction=introduction,
+                            # company_name=company_name,
+                            # category_id=category_id,
+                            # city_id=city_id,
+                            # url=url)
+
+
+@app.route('/profile-edit', methods=['POST'])
+def update_profile():
+    """Editing profile."""
+
+    category_id = request.form.get("category")
+    company = request.form.get("company-name")
+    description = request.form.get("description")
+    past_jobs = request.form.get("prev-experience")
+    city = request.form.get("city")
+    url = request.form.get("url")
+
+    data = {"category_id": category_id,
+            "company_name": company,
+            "introduction": description,
+            "past_jobs": past_jobs,
+            "city_name": city,
+            "url": url}
+
+    User.query.filter_by(user_id=session['id']).update(data)
+
+    db.session.commit()
+
+    return "You have successfully updated your profile."
+
+
+@app.route('/find-mentors')
+def available_mentors:
+    """Display all available mentors."""
+
+    mentors = Mentor.query.filter(Mentor.user.company_name != "--").all()
+
+    return render_template("search.html", mentors=mentors)
+# find available mentors
+# if user is a mentor AND they have chosen a category they want to mentor in,
+# render template and display all the mentors
+
+@app.route('/match-pending', methods=["POST"])
+def match_pending:
+    """Mentee selects interest in a mentor."""
+
+    mentor_id = request.form.get("mentor_id")
+    # not sure if querying for mentee id is correct
+    mentee_id = Mentee.query.filter_by(Mentee.user.user_id == session[id]).one()
+    user = User.query.filter_by(user_id=session['id']).first()
+
+    new_pending = MatchR(mentee_id=user, mentor_id=mentor_id)
+
+    db.session.add(new_pending)
+    db.session.commit()
+
+
+@app.route('/match', methods=["POST"])
+def match:
+    """Mentor accepts a mentee's request for mentorship."""
+
+    # need to find out how to find mentee id and mentor id
+
+    MatchR.query.filter(mentee_id=mentee_id, mentor_id=mentor_id).update({"status": "Matched"})
+
+    db.session.commit()
+
+    return redirect('/SOMEWHERE-LOL. Probably to a chatting page.')
 
 @app.route('/logout')
 def logout():
