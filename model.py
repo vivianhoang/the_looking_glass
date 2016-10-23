@@ -113,7 +113,7 @@ class Category(db.Model):
     __tablename__ = "categories"
 
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    name = db.Column(db.String(20), nullable=False)
+    name = db.Column(db.String(20), nullable=False, primary_key=True)
 
     def __repr__(self):
         """Provides helpful representation when printed."""
