@@ -142,12 +142,11 @@ class City(db.Model):
 
 
 dictalchemy.utils.make_class_dictable(User)
-dictalchemy.utils.make_class_dictable(Salary_R)
-dictalchemy.utils.make_class_dictable(Company_R)
-dictalchemy.utils.make_class_dictable(Company_N)
 dictalchemy.utils.make_class_dictable(Mentee)
-dictalchemy.utils.make_class_dictable(Topic)
-dictalchemy.utils.make_class_dictable(Match)
+dictalchemy.utils.make_class_dictable(Mentor)
+dictalchemy.utils.make_class_dictable(MatchR)
+dictalchemy.utils.make_class_dictable(Category)
+dictalchemy.utils.make_class_dictable(City)
 
 ################################################################################
 # This is a test comment
