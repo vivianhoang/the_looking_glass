@@ -5,5 +5,82 @@
 {% endblock %}
 
 {% block content %}
-    <h1>User Name</h1>
+    <h3>{{user.first_name}} {{user.last_name}} | {{user.gender}}</h3>
+
+    <form id="profile-description" action="/profile-edit" method="POST">
+        {% if mentor %}
+            <div>    
+                <label>Job Category:
+                    <select name="category">
+                    {% for category in categories %}
+                        <option value="{{category.id}}">{{ category.category_name }}</option>
+                    {% endfor %}
+                    </select>
+                </label>
+            </div>
+
+        <div class="label">Current Company:</div>
+        {% if user.company_name %}
+            <div>
+                <textarea class="company-name" name="company-name" rows="10" cols="5">{{user.company_name}}</textarea>
+            </div>
+
+        {% else %}
+            <div>
+                <textarea class="company-name" name="company-name" rows="10" cols="5" placeholder="Enter your profile here..."></textarea>
+            </div>
+
+        <div class="label">About Me:</div><span class="chars"></span>
+        {% if user.introduction %}
+            <div>
+                <textarea class="profile-bio" name="profile-bio" rows="10" cols="25">{{user.introduction}}</textarea>
+            </div>
+
+        {% else %}
+            <div>
+                <textarea class="profile-bio" name="profile-bio" rows="18" cols="45" placeholder="Enter your profile here..."></textarea>
+            </div>
+
+        <div class="label">Previous Experience:</div><span class="chars"></span>
+        {% if user.past_job %}
+            <div>
+                <textarea class="past-job" name="past-job" rows="15" cols="25">{{user.past_job}}</textarea>
+            </div>
+
+        {% else %}
+            <div>
+                <textarea class="past-job" name="past-job" rows="15" cols="25" placeholder="Enter previous experience..."></textarea>
+            </div>
+
+        {% endif %}
+
+        <div>    
+            <label>City:
+                <select name="city">
+                {% if user.city_name %}
+                    <option value={{"user.city_name"}}>{{user.city_name}}</option>
+                {% for city in cities %}
+                    <option value="{{city.city_name}}">{{ city.city_name }}</option>
+                {% endfor %}
+                </select>
+            </label>
+        </div>
+
+        <div class="label">LinkedIn URL:</div>
+        {% if user.url %}
+            <div>
+                <textarea class="url" name="url" rows="10" cols="25">{{user.url}}</textarea>
+            </div>
+
+        {% else %}
+            <div>
+                <textarea class="url" name="url" rows="10" cols="15" placeholder="Enter your url..."></textarea>
+            </div>
+
+        <div>
+            <input type="submit" value="Update Profile"> &nbsp <span id="chars"></span>
+        </div>
+
+    </form>
+<script src="/static/js/edit-profile.js"></script>
 {% endblock %}
