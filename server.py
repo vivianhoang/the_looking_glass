@@ -122,12 +122,36 @@ def mentor():
 
 # This route will display the member's profile
 @app.route('/profile/<id>')
-def display_profile():
+def display_profile(id):
 
     # Page with user profile including first name, last name, email, etc
 
-    return render_template("profile.html")
+    user = User.query.filter(User.id == id).one()
 
+    first_name = user.first_name
+    last_name = user.last_name
+    email = user.email
+    gender = user.gender
+    past_jobs = user.past_jobs
+    phone = user.phone
+    introduction = user.introduction
+    company_name = user.company_name
+    category_id = user.category_id
+    city_id = user.city_id
+    url = user.url
+
+    return render_template("profile.html",
+                            first_name=first_name,
+                            last_name=last_name,
+                            email=email,
+                            gender=gender,
+                            past_jobs=past_jobs,
+                            phone=phone,
+                            introduction=introduction,
+                            company_name=company_name,
+                            category_id=category_id,
+                            city_id=city_id,
+                            url=url)
 
 @app.route('/logout')
 def logout():
