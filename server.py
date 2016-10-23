@@ -1,9 +1,9 @@
 # import json
 import os
 
-# from jinja2 import StrictUndefined
-from flask import (Flask, render_template, request, redirect, session, jsonify)
-# from flask_debugtoolbar import DebugToolbarExtension
+from jinja2 import StrictUndefined
+from flask import (Flask, render_template, request, flash, redirect, session, jsonify)
+from flask_debugtoolbar import DebugToolbarExtension
 
 
 from model import connect_to_db, db, User, Mentee, Mentor, MatchR, Category, City
@@ -11,7 +11,7 @@ from model import connect_to_db, db, User, Mentee, Mentor, MatchR, Category, Cit
 app = Flask(__name__)
 app.secret_key = "ABC"
 
-# app.jinja_env.undefined = StrictUndefined
+app.jinja_env.undefined = StrictUndefined
 
 
 @app.route('/', methods=["GET"])
@@ -38,7 +38,7 @@ def register():
     # url = request.form.get("url")
     role = request.form.get("role")
 
-    user = User.query.filter(User.email == email).first())
+    user = User.query.filter(User.email == email).first()
     
     # Check to see if they are already registered user.
     # If in database, redirect them to index with flash message "You are already registered. Please log in"
@@ -47,8 +47,8 @@ def register():
         return redirect('/')
     # Else if they a new user, Add to user table
     else: 
-        user = User(firstname=firstname, 
-                    lastname=lastname,
+        user = User(first_name=firstname, 
+                    last_name=lastname,
                     email=email, 
                     password=password,
                     gender=gender,
@@ -59,7 +59,6 @@ def register():
                     # category_id=category_id,
                     # city_id=city_id,
                     # url=url,
-                    role=role
                     ) 
         db.session.add(user)
         db.session.commit()
@@ -68,22 +67,18 @@ def register():
 
         # Check to see if user is a mentee or mentor 
         # have to put the user into right database
-        if role = "Mentor":
+        if role ==  "Mentor":
             mentor = Mentor(user_id=session['id'],
                 )
             db.session.add(mentor)
             db.session.commit()
-            print "works."
-            return
-            # return redirect('/search.html')
+            return redirect('/search.html')
         else:
             mentee = Mentee(user_id=session['id'],
                 )
             db.session.add(mentee)
             db.session.commit()
-            print "works."
-            return
-            # return redirect('profile.html')
+            return redirect('profile.html')
 
 
 @app.route('/login', methods=["POST"])
@@ -116,7 +111,7 @@ def mentee():
     return render_template("mentee.html")
 
 
-@app.route('/mentor', methods['GET'])
+@app.route('/mentor', methods=['GET'])
 def mentor():
     """Landing page for mentor login."""
 
@@ -144,10 +139,10 @@ def logout():
 
 
 if __name__ == '__main__':
-    # app.debug = True
+    app.debug = True
     # app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
     connect_to_db(app) 
-    # DebugToolbarExtension(app)
+    DebugToolbarExtension(app)
     app.run(host="0.0.0.0", port=5000)
 
 
